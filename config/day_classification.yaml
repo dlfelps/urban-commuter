@@ -1,0 +1,18 @@
+# Day Classification Configuration
+#
+# Based on cumulative 7-day cycle analysis:
+# - Day 0 is Sunday (first weekend day) - position 0 mod 7
+# - Day 6 is Saturday (second weekend day) - position 6 mod 7
+# - No reduced activity on Friday (all weekdays: Mon-Fri are similar)
+#
+# Pattern: Sunday (0 mod 7) and Saturday (6 mod 7) are weekends
+# All other days (1-5 mod 7) are weekdays
+
+# List of day indices (0-74) that correspond to weekends
+# Sunday: 0, 7, 14, 21, 28, 35, 42, 49, 56, 63, 70
+# Saturday: 6, 13, 20, 27(skip-anomaly), 34, 41, 48, 55, 62, 69
+weekend_days: [0, 6, 7, 13, 14, 20, 28, 34, 35, 41, 42, 48, 49, 55, 56, 62, 63, 69, 70]
+
+# List of day indices that are anomalous and should be excluded
+# Day 27 is anomalous (natural disaster event)
+anomalous_days: [27]
