@@ -23,9 +23,9 @@ def timeslot_to_hour(timeslot):
     return (timeslot * 30) // 60
 
 def load_data():
-    """Load and validate cityD dataset"""
-    print("Loading cityD-dataset.csv...")
-    df = pd.read_csv(DATA_DIR / "cityD-dataset.csv")
+    """Load and validate cityA dataset"""
+    print("Loading cityA-dataset.csv...")
+    df = pd.read_csv(DATA_DIR / "cityA-dataset.csv")
     print(f"Loaded {len(df):,} records")
     print(f"Days: {df['d'].min()}-{df['d'].max()}")
     print(f"Timeslots: {df['t'].min()}-{df['t'].max()}")

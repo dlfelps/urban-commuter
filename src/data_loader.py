@@ -33,16 +33,16 @@ class DataLoader:
 
     def load_mobility_data(self) -> pd.DataFrame:
         """
-        Load cityD mobility dataset
+        Load cityA mobility dataset
 
         Returns:
             DataFrame with columns: uid, d, t, x, y
             - uid: user ID
-            - d: day (0-74)
-            - t: timeslot (0-47, 30-min bins)
-            - x, y: grid coordinates (1-200)
+            - d: day
+            - t: timeslot (30-min bins)
+            - x, y: grid coordinates
         """
-        filepath = self.data_dir / "cityD-dataset.csv"
+        filepath = self.data_dir / "cityA-dataset.csv"
 
         if not filepath.exists():
             raise FileNotFoundError(f"Mobility dataset not found: {filepath}")
@@ -56,13 +56,17 @@ class DataLoader:
         if missing_cols:
             raise ValueError(f"Missing required columns: {missing_cols}")
 
-        # Validate data ranges
-        assert df['d'].min() >= 0 and df['d'].max() <= 74, "Day out of range [0, 74]"
-        assert df['t'].min() >= 0 and df['t'].max() <= 47, "Timeslot out of range [0, 47]"
-        assert df['x'].min() >= 1 and df['x'].max() <= 200, "X coordinate out of range [1, 200]"
-        assert df['y'].min() >= 1 and df['y'].max() <= 200, "Y coordinate out of range [1, 200]"
+        # Validate data ranges (flexible for different datasets)
+        if df['d'].min() < 0 or df['d'].max() > 100:
+            raise ValueError(f"Day out of expected range: {df['d'].min()}-{df['d'].max()}")
+        if df['t'].min() < 0 or df['t'].max() > 100:
+            raise ValueError(f"Timeslot out of expected range: {df['t'].min()}-{df['t'].max()}")
+        if df['x'].min() < 1 or df['x'].max() > 200:
+            raise ValueError(f"X coordinate out of range [1, 200]: {df['x'].min()}-{df['x'].max()}")
+        if df['y'].min() < 1 or df['y'].max() > 200:
+            raise ValueError(f"Y coordinate out of range [1, 200]: {df['y'].min()}-{df['y'].max()}")
 
-        print(f"✓ Loaded {len(df):,} mobility records")
+        print(f"[OK] Loaded {len(df):,} mobility records")
         print(f"  Users: {df['uid'].nunique():,}")
         print(f"  Days: {df['d'].min()}-{df['d'].max()}")
         print(f"  Timeslots: {df['t'].min()}-{df['t'].max()}")
@@ -76,11 +80,11 @@ class DataLoader:
 
         Returns:
             DataFrame with columns: x, y, category, POI_count
-            - x, y: grid coordinates (1-200)
-            - category: POI category dimension (1-85)
+            - x, y: grid coordinates
+            - category: POI category dimension
             - POI_count: number of POIs in this category at this cell
         """
-        filepath = self.data_dir / "POIdata_cityD.csv"
+        filepath = self.data_dir / "POIdata_cityA.csv"
 
         if not filepath.exists():
             raise FileNotFoundError(f"POI dataset not found: {filepath}")
@@ -94,7 +98,7 @@ class DataLoader:
         if missing_cols:
             raise ValueError(f"Missing required columns: {missing_cols}")
 
-        print(f"✓ Loaded {len(df):,} POI records")
+        print(f"[OK] Loaded {len(df):,} POI records")
         print(f"  Grid cells with POI data: {df[['x', 'y']].drop_duplicates().shape[0]:,}")
         print(f"  POI categories: {df['category'].min()}-{df['category'].max()}")
 
@@ -136,7 +140,7 @@ class DataLoader:
         if not isinstance(anomalous_days, list):
             raise ValueError("'anomalous_days' must be a list")
 
-        print(f"✓ Loaded day classification")
+        print(f"[OK] Loaded day classification")
         print(f"  Weekend days: {weekend_days}")
         print(f"  Anomalous days: {anomalous_days}")
 
@@ -145,12 +149,13 @@ class DataLoader:
             'anomalous_days': anomalous_days
         }
 
-    def create_day_type_mapping(self, day_classification: Dict[str, list]) -> pd.DataFrame:
+    def create_day_type_mapping(self, day_classification: Dict[str, list], num_days: int = 75) -> pd.DataFrame:
         """
         Create mapping of days to day_type (weekday/weekend/anomalous)
 
         Args:
             day_classification: Dict from load_day_classification()
+            num_days: Total number of days in dataset (default: 75)
 
         Returns:
             DataFrame with columns: day, day_type, available
@@ -158,7 +163,7 @@ class DataLoader:
         weekend_days = day_classification['weekend_days']
         anomalous_days = day_classification['anomalous_days']
 
-        days = list(range(75))
+        days = list(range(num_days))
         day_types = []
         available = []
 

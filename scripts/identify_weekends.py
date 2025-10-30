@@ -17,9 +17,9 @@ OUTPUT_DIR = Path(__file__).parent.parent / "analysis"
 OUTPUT_DIR.mkdir(exist_ok=True)
 
 def load_data():
-    """Load cityD dataset"""
-    print("Loading cityD-dataset.csv...")
-    df = pd.read_csv(DATA_DIR / "cityD-dataset.csv")
+    """Load cityA dataset"""
+    print("Loading cityA-dataset.csv...")
+    df = pd.read_csv(DATA_DIR / "cityA-dataset.csv")
     return df
 
 def analyze_day_patterns(df):

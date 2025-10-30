@@ -14,5 +14,5 @@
 weekend_days: [0, 6, 7, 13, 14, 20, 28, 34, 35, 41, 42, 48, 49, 55, 56, 62, 63, 69, 70]
 
 # List of day indices that are anomalous and should be excluded
-# Day 27 is anomalous (natural disaster event)
-anomalous_days: [27]
+# Days with <110K pings (anomalous weekdays at weekend activity levels)
+anomalous_days: [1, 8, 27, 29, 37, 50]

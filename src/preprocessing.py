@@ -46,7 +46,8 @@ class DataPreprocessor:
         self.poi_df = self.loader.load_poi_data()
 
         day_class = self.loader.load_day_classification()
-        self.day_mapping = self.loader.create_day_type_mapping(day_class)
+        num_days = self.mobility_df['d'].max() + 1
+        self.day_mapping = self.loader.create_day_type_mapping(day_class, num_days=num_days)
 
     def create_cell_flows(self) -> pd.DataFrame:
         """
@@ -106,7 +107,7 @@ class DataPreprocessor:
             't': 'timeslot'
         })
 
-        print(f"✓ Created flow data")
+        print(f"[OK] Created flow data")
         print(f"  Total flows: {len(flows):,}")
         print(f"  Unique (source, target) pairs: {flows[['source_cell_x', 'source_cell_y', 'target_cell_x', 'target_cell_y']].drop_duplicates().shape[0]:,}")
         print(f"  Timeslots represented: {flows['timeslot'].nunique()}")
@@ -145,7 +146,7 @@ class DataPreprocessor:
 
         cells = cells.rename(columns={'x': 'cell_x', 'y': 'cell_y'})
 
-        print(f"✓ Created cell statistics for {len(cells):,} cells")
+        print(f"[OK] Created cell statistics for {len(cells):,} cells")
 
         # Enrich with POI features
         # Pivot POI data so each category becomes a column
@@ -161,7 +162,7 @@ class DataPreprocessor:
         poi_pivot = poi_pivot.reset_index()
         poi_pivot = poi_pivot.rename(columns={'x': 'cell_x', 'y': 'cell_y'})
 
-        print(f"✓ Loaded POI features for {len(poi_pivot):,} cells")
+        print(f"[OK] Loaded POI features for {len(poi_pivot):,} cells")
 
         # Merge POI data (left join to keep all cells even without POI)
         cells = cells.merge(
@@ -181,7 +182,7 @@ class DataPreprocessor:
             lambda x: 'urban' if x >= median_pings else 'rural'
         )
 
-        print(f"✓ Classified cells")
+        print(f"[OK] Classified cells")
         print(f"  Urban cells: {(cells['cell_type'] == 'urban').sum()}")
         print(f"  Rural cells: {(cells['cell_type'] == 'rural').sum()}")
 
@@ -203,7 +204,7 @@ class DataPreprocessor:
 
         metadata = self.day_mapping.copy()
 
-        print(f"✓ Created temporal metadata")
+        print(f"[OK] Created temporal metadata")
         print(f"  Weekdays: {(metadata['day_type'] == 'weekday').sum()}")
         print(f"  Weekends: {(metadata['day_type'] == 'weekend').sum()}")
         print(f"  Anomalous: {(metadata['day_type'] == 'anomalous').sum()}")
@@ -224,17 +225,17 @@ class DataPreprocessor:
         # Save flows
         flows_path = self.output_dir / "cell_flows.parquet"
         flows.to_parquet(flows_path, index=False)
-        print(f"✓ Saved cell_flows.parquet ({len(flows):,} rows)")
+        print(f"[OK] Saved cell_flows.parquet ({len(flows):,} rows)")
 
         # Save cell attributes
         cells_path = self.output_dir / "cell_attributes.parquet"
         cells.to_parquet(cells_path, index=False)
-        print(f"✓ Saved cell_attributes.parquet ({len(cells):,} rows)")
+        print(f"[OK] Saved cell_attributes.parquet ({len(cells):,} rows)")
 
         # Save temporal metadata
         metadata_path = self.output_dir / "temporal_metadata.parquet"
         metadata.to_parquet(metadata_path, index=False)
-        print(f"✓ Saved temporal_metadata.parquet ({len(metadata):,} rows)")
+        print(f"[OK] Saved temporal_metadata.parquet ({len(metadata):,} rows)")
 
         print(f"\nIntermediate data saved to: {self.output_dir}")
 
