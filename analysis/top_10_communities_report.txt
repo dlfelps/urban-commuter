@@ -1,0 +1,111 @@
+TOP 10 COMMUNITIES DETAILED ANALYSIS
+
+COMMUNITY 1: ID=1
+  Nodes: 3274
+  Edges: 77451
+  Total Flow: 163619
+  Average Degree: 99.95
+  Density: 0.014455
+  Geographic Bounds:
+    X: [1, 154] (range: 153)
+    Y: [93, 200] (range: 107)
+  Center: (40.8, 177.0)
+
+COMMUNITY 2: ID=8
+  Nodes: 2772
+  Edges: 49324
+  Total Flow: 119720
+  Average Degree: 86.38
+  Density: 0.012843
+  Geographic Bounds:
+    X: [110, 200] (range: 90)
+    Y: [61, 159] (range: 98)
+  Center: (144.8, 110.6)
+
+COMMUNITY 3: ID=10
+  Nodes: 2767
+  Edges: 33800
+  Total Flow: 69586
+  Average Degree: 50.30
+  Density: 0.008833
+  Geographic Bounds:
+    X: [91, 200] (range: 109)
+    Y: [147, 200] (range: 53)
+  Center: (144.9, 179.2)
+
+COMMUNITY 4: ID=9
+  Nodes: 2588
+  Edges: 44786
+  Total Flow: 98489
+  Average Degree: 76.11
+  Density: 0.013379
+  Geographic Bounds:
+    X: [7, 200] (range: 193)
+    Y: [1, 128] (range: 127)
+  Center: (165.1, 51.2)
+
+COMMUNITY 5: ID=7
+  Nodes: 2030
+  Edges: 71967
+  Total Flow: 192664
+  Average Degree: 189.82
+  Density: 0.034945
+  Geographic Bounds:
+    X: [5, 162] (range: 157)
+    Y: [94, 174] (range: 80)
+  Center: (57.5, 136.7)
+
+COMMUNITY 6: ID=4
+  Nodes: 1991
+  Edges: 42876
+  Total Flow: 96913
+  Average Degree: 97.35
+  Density: 0.021643
+  Geographic Bounds:
+    X: [1, 53] (range: 52)
+    Y: [71, 145] (range: 74)
+  Center: (19.7, 107.8)
+
+COMMUNITY 7: ID=6
+  Nodes: 1779
+  Edges: 49578
+  Total Flow: 123312
+  Average Degree: 138.63
+  Density: 0.031348
+  Geographic Bounds:
+    X: [34, 171] (range: 137)
+    Y: [11, 135] (range: 124)
+  Center: (107.0, 86.0)
+
+COMMUNITY 8: ID=2
+  Nodes: 1773
+  Edges: 60187
+  Total Flow: 156687
+  Average Degree: 176.75
+  Density: 0.038314
+  Geographic Bounds:
+    X: [65, 169] (range: 104)
+    Y: [106, 185] (range: 79)
+  Center: (95.6, 156.5)
+
+COMMUNITY 9: ID=5
+  Nodes: 1482
+  Edges: 24406
+  Total Flow: 59673
+  Average Degree: 80.53
+  Density: 0.022239
+  Geographic Bounds:
+    X: [1, 73] (range: 72)
+    Y: [1, 93] (range: 92)
+  Center: (15.6, 32.7)
+
+COMMUNITY 10: ID=3
+  Nodes: 1449
+  Edges: 29386
+  Total Flow: 74223
+  Average Degree: 102.45
+  Density: 0.028011
+  Geographic Bounds:
+    X: [41, 145] (range: 104)
+    Y: [4, 122] (range: 118)
+  Center: (79.5, 77.9)

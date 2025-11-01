@@ -10,9 +10,13 @@
 
 # List of day indices (0-74) that correspond to weekends
 # Sunday: 0, 7, 14, 21, 28, 35, 42, 49, 56, 63, 70
-# Saturday: 6, 13, 20, 27(skip-anomaly), 34, 41, 48, 55, 62, 69
-weekend_days: [0, 6, 7, 13, 14, 20, 28, 34, 35, 41, 42, 48, 49, 55, 56, 62, 63, 69, 70]
+# Saturday: 6, 13, 20, 27(anomaly), 34, 41, 48, 55, 62, 69
+# NOTE: Days 7 and 49 moved to weekend as they are Sundays with low activity
+weekend_days: [0, 6, 13, 14, 20, 21, 28, 34, 35, 41, 42, 48, 55, 56, 62, 63, 69, 70]
 
 # List of day indices that are anomalous and should be excluded
-# Days with <110K pings (anomalous weekdays at weekend activity levels)
-anomalous_days: [1, 8, 27, 29, 37, 50]
+# cityA: Days with <1,250,000 pings (significantly below normal)
+# Day 27: Strong anomaly (966K pings, 62% of weekday avg) - special event/holiday
+# Day 7: Weak anomaly (1.23M pings, 79% of weekday avg) - unusual Sunday
+# Day 49: Weak anomaly (1.25M pings, 80% of weekday avg) - unusual Sunday
+anomalous_days: [7, 27, 49]

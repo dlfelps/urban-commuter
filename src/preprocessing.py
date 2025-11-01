@@ -45,9 +45,43 @@ class DataPreprocessor:
         self.mobility_df = self.loader.load_mobility_data()
         self.poi_df = self.loader.load_poi_data()
 
+        # Apply coordinate transformation to correct rotation
+        print("\n[COORDINATE TRANSFORM] Applying transformation to mobility data...")
+        self.mobility_df = self.transform_coordinates(self.mobility_df)
+        print("[OK] Coordinates transformed (swap x and y)")
+
+        print("[COORDINATE TRANSFORM] Applying transformation to POI data...")
+        self.poi_df = self.transform_coordinates(self.poi_df)
+        print("[OK] POI coordinates transformed")
+
         day_class = self.loader.load_day_classification()
         num_days = self.mobility_df['d'].max() + 1
         self.day_mapping = self.loader.create_day_type_mapping(day_class, num_days=num_days)
+
+    def transform_coordinates(self, df: pd.DataFrame) -> pd.DataFrame:
+        """
+        Transform coordinates to correct rotation:
+        Swap x and y coordinates (transpose)
+
+        Transformation formula:
+        - new_x = old_y
+        - new_y = old_x
+
+        Args:
+            df: DataFrame with 'x' and 'y' columns
+
+        Returns:
+            DataFrame with transformed coordinates
+        """
+        df = df.copy()
+
+        # Swap x and y
+        df['x_temp'] = df['x']
+        df['x'] = df['y']
+        df['y'] = df['x_temp']
+        df = df.drop(columns=['x_temp'])
+
+        return df
 
     def create_cell_flows(self) -> pd.DataFrame:
         """
